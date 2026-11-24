@@ -1,0 +1,12 @@
+{
+  "name": "gemini-local-agent-bridge",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "description": "Zero-dependency local bridge server for Gemini Local Agent.",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test-bridge.mjs"
+  }
+}

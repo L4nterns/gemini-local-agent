@@ -1,0 +1,8 @@
+# Bridge runtime secrets & persistent logs
+bridge/.bridge-config.json
+bridge/logs/
+
+# OS & editor junk
+.DS_Store
+Thumbs.db
+*.log

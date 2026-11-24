@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gemini Local Agent</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="brand">
+        <div class="logo">&gt;_</div>
+        <div>
+          <h1 data-i18n="extName">Gemini Local Agent</h1>
+          <p class="subtitle" data-i18n="popupSubtitle">Connect Gemini Web to local workspaces</p>
+        </div>
+      </div>
+      <span id="statusBadge" class="badge offline" data-i18n="statusOffline">Offline</span>
+    </header>
+
+    <!-- Disconnected Setup Guide -->
+    <section id="guideSection" class="section hidden">
+      <div class="section-head">
+        <div class="section-title" data-i18n="setupTitle">Start Local Service</div>
+        <span class="sub-status" data-i18n="autoDetecting">Detecting...</span>
+      </div>
+      <div id="guideNormal">
+        <div class="step">
+          <span class="step-num">1</span>
+          <div class="step-body">
+            <span data-i18n="setupStep1">Run in the project directory:</span>
+            <div class="cmd-box">
+              <span title="node bridge/server.js">node bridge/server.js</span>
+              <button id="copyStartCmdBtn" class="btn xs" data-i18n="copyBtn">Copy</button>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num">2</span>
+          <div class="step-body" data-i18n="setupStep2">Once running, the extension pairs and connects automatically.</div>
+        </div>
+      </div>
+      <div id="guideOtherPaired" class="hidden">
+        <p class="hint warn" data-i18n="pairedOtherWarning">The local bridge is paired with another extension instance.</p>
+        <div class="step">
+          <span class="step-num">1</span>
+          <div class="step-body">
+            <span data-i18n="pairedOtherStep1">Run this command to reset pairing:</span>
+            <div class="cmd-box">
+              <span title="node bridge/server.js --reset-pair">node bridge/server.js --reset-pair</span>
+              <button id="copyResetCmdBtn" class="btn xs" data-i18n="copyBtn">Copy</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Connected Workspace List -->
+    <section id="workspaceSection" class="section hidden">
+      <div class="section-head">
+        <div class="section-title" data-i18n="workspacesTitle">Workspaces</div>
+        <button id="pickNativeBtn" class="btn xs" data-i18n="addWorkspace">+ Add Workspace</button>
+      </div>
+      <div id="workspaceList" class="ws-list"></div>
+      <div id="envMeta" class="meta meta-single"></div>
+    </section>
+
+    <!-- Settings -->
+    <section class="section">
+      <div class="row">
+        <label class="field" style="flex: 1;">
+          <span data-i18n="approvalPolicy">Approval Policy</span>
+          <select id="mode">
+            <option value="smart" data-i18n="modeReadOption">Read-Only (confirm writes &amp; commands)</option>
+            <option value="auto" data-i18n="modeAutoOption">Auto (confirm high-risk only)</option>
+          </select>
+        </label>
+        <label class="field" style="width: 82px; flex-shrink: 0;">
+          <span data-i18n="maxTurnsLabel">Max Turns</span>
+          <input id="maxAutoTurns" type="number" min="1" max="100" value="15" />
+        </label>
+      </div>
+
+      <label class="field">
+        <span data-i18n="themeLabel">Panel Theme</span>
+        <select id="theme">
+          <option value="auto" data-i18n="themeAuto">Match Page</option>
+          <option value="dark" data-i18n="themeDark">Dark</option>
+          <option value="light" data-i18n="themeLight">Light</option>
+        </select>
+      </label>
+
+      <details class="advanced">
+        <summary data-i18n="advancedSettings">Advanced Settings (Port / Pairing Token)</summary>
+        <div class="advanced-body">
+          <label class="field">
+            <span data-i18n="bridgeUrlLabel">Local Service URL</span>
+            <input id="bridgeUrl" type="text" placeholder="http://127.0.0.1:3847" />
+          </label>
+          <label class="field">
+            <span data-i18n="pairingTokenLabel">Pairing Token (blank for auto-pairing)</span>
+            <input id="token" type="password" data-i18n-placeholder="pairingTokenPlaceholder" placeholder="Pairing Token (blank for auto-pairing)" />
+          </label>
+        </div>
+      </details>
+
+      <div class="actions">
+        <button id="saveBtn" class="btn primary" data-i18n="saveSettings">Save</button>
+        <button id="openGeminiBtn" class="btn" data-i18n="openGemini">Open Gemini</button>
+      </div>
+    </section>
+
+    <div id="feedback" class="feedback hidden"></div>
+  </div>
+
+  <script src="i18n.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

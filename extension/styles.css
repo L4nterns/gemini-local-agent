@@ -1,0 +1,1035 @@
+/* Gemini Local Agent — Scoped Adaptive UI Styles */
+#gla-root,
+#gla-approval-dock {
+  --gla-bg: rgba(19, 22, 29, 0.94);
+  --gla-surface: rgba(30, 34, 45, 0.92);
+  --gla-surface-2: rgba(14, 17, 23, 0.65);
+  --gla-border: rgba(255, 255, 255, 0.11);
+  --gla-text: #eef1f7;
+  --gla-text-muted: #9aa4b8;
+  --gla-accent: #4c8dff;
+  --gla-accent-glow: rgba(76, 141, 255, 0.35);
+  --gla-green: #34d399;
+  --gla-amber: #fbbf24;
+  --gla-red: #f87171;
+  --gla-purple: #a78bfa;
+  --gla-code-bg: rgba(0, 0, 0, 0.36);
+  --gla-shadow: 0 18px 56px rgba(0, 0, 0, 0.52);
+  --gla-radius: 14px;
+  --gla-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Roboto, sans-serif;
+  --gla-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+
+  position: fixed;
+  z-index: 2147483000;
+  font-family: var(--gla-font);
+  color: var(--gla-text);
+  font-size: 13px;
+  line-height: 1.45;
+  box-sizing: border-box;
+}
+
+#gla-root {
+  right: 18px;
+  bottom: 20px;
+}
+
+#gla-approval-dock {
+  z-index: 2147482990;
+}
+
+#gla-approval-dock.hidden {
+  display: none !important;
+}
+
+#gla-root.gla-light,
+#gla-approval-dock.gla-light {
+  --gla-bg: rgba(255, 255, 255, 0.96);
+  --gla-surface: rgba(244, 246, 251, 0.96);
+  --gla-surface-2: rgba(235, 239, 248, 0.85);
+  --gla-border: rgba(15, 23, 42, 0.12);
+  --gla-text: #111827;
+  --gla-text-muted: #5b6577;
+  --gla-accent: #2563eb;
+  --gla-accent-glow: rgba(37, 99, 235, 0.25);
+  --gla-green: #059669;
+  --gla-amber: #d97706;
+  --gla-red: #dc2626;
+  --gla-purple: #7c3aed;
+  --gla-code-bg: rgba(15, 23, 42, 0.06);
+  --gla-shadow: 0 14px 44px rgba(15, 23, 42, 0.16);
+}
+
+#gla-root *,
+#gla-root *::before,
+#gla-root *::after,
+#gla-approval-dock *,
+#gla-approval-dock *::before,
+#gla-approval-dock *::after {
+  box-sizing: border-box;
+}
+
+.gla-ellipsis {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Floating Toggle Pill */
+.gla-fab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border-radius: 999px;
+  background: var(--gla-bg);
+  border: 1px solid var(--gla-border);
+  color: var(--gla-text);
+  cursor: pointer;
+  box-shadow: var(--gla-shadow), 0 0 0 1px rgba(76, 141, 255, 0.18);
+  backdrop-filter: blur(14px);
+  font-weight: 600;
+  font-size: 13px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  user-select: none;
+}
+
+.gla-fab.gla-fab-normal {
+  opacity: 0.82;
+  border-color: var(--gla-border);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
+}
+
+.gla-fab.gla-fab-mismatch {
+  border-color: rgba(251, 191, 36, 0.7);
+}
+
+.gla-fab:hover,
+.gla-fab.gla-fab-normal:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+  border-color: var(--gla-accent);
+  box-shadow: var(--gla-shadow), 0 0 16px var(--gla-accent-glow);
+}
+
+.gla-fab-ws {
+  max-width: 170px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--gla-mono);
+  font-size: 12px;
+}
+
+.gla-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gla-red);
+  flex-shrink: 0;
+}
+
+.gla-dot.online {
+  background: var(--gla-green);
+  box-shadow: 0 0 8px rgba(52, 211, 153, 0.65);
+}
+
+.gla-dot.busy {
+  background: var(--gla-amber);
+  box-shadow: 0 0 8px rgba(251, 191, 36, 0.65);
+}
+
+/* Main Drawer Panel */
+.gla-panel {
+  position: relative;
+  width: 408px;
+  height: 468px;
+  max-width: calc(100vw - 24px);
+  max-height: calc(100vh - 36px);
+  display: flex;
+  flex-direction: column;
+  background: var(--gla-bg);
+  border: 1px solid var(--gla-border);
+  border-radius: var(--gla-radius);
+  box-shadow: var(--gla-shadow);
+  backdrop-filter: blur(18px);
+  overflow: hidden;
+}
+
+.gla-panel.hidden,
+.gla-fab.hidden {
+  display: none !important;
+}
+
+.gla-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 13px;
+  border-bottom: 1px solid var(--gla-border);
+  background: rgba(127, 127, 127, 0.05);
+  cursor: grab;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.gla-header:active {
+  cursor: grabbing;
+}
+
+.gla-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.gla-logo {
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  background: linear-gradient(135deg, #2587ff, #6366f1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 11px;
+  font-family: var(--gla-mono);
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.gla-title {
+  font-weight: 700;
+  font-size: 13.5px;
+  white-space: nowrap;
+}
+
+.gla-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--gla-code-bg);
+  color: var(--gla-text-muted);
+  white-space: nowrap;
+}
+
+.gla-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.gla-icon-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--gla-text-muted);
+  border-radius: 7px;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.gla-icon-btn:hover {
+  background: var(--gla-code-bg);
+  color: var(--gla-text);
+}
+
+/* Tabs */
+.gla-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 7px 13px 0;
+  flex-shrink: 0;
+}
+
+.gla-tab {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--gla-text-muted);
+  padding: 6px 4px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.gla-tab.active {
+  color: var(--gla-accent);
+  border-bottom-color: var(--gla-accent);
+}
+
+/* Body */
+.gla-body {
+  flex: 1;
+  min-height: 0;
+  padding: 11px 13px 13px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.gla-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.gla-body::-webkit-scrollbar-thumb {
+  background: rgba(128, 138, 160, 0.28);
+  border-radius: 3px;
+}
+
+.gla-card {
+  background: var(--gla-surface);
+  border: 1px solid var(--gla-border);
+  border-radius: 10px;
+  padding: 10px 11px;
+  flex-shrink: 0;
+}
+
+.gla-logs-card {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.gla-logs-card .gla-list {
+  flex: 1;
+  min-height: 0;
+  max-height: none;
+}
+
+.gla-card-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--gla-text-muted);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+/* Session Bar (Normal Chat selectable peer of Workspaces) */
+.gla-session-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 9px;
+  border: 1px solid var(--gla-border);
+  background: var(--gla-surface);
+  flex-shrink: 0;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.gla-session-bar.clickable {
+  cursor: pointer;
+}
+
+.gla-session-bar.clickable:hover {
+  border-color: rgba(76, 141, 255, 0.5);
+}
+
+.gla-session-bar.active {
+  border-color: rgba(52, 211, 153, 0.55);
+  background: rgba(52, 211, 153, 0.08);
+  cursor: default;
+}
+
+.gla-session-bar.locked:not(.active) {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.gla-session-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.gla-session-title {
+  font-weight: 700;
+  font-size: 13px;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+/* Workspace List */
+.gla-ws-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.gla-ws-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border-radius: 7px;
+  border: 1px solid var(--gla-border);
+  background: var(--gla-code-bg);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.gla-ws-item:hover {
+  border-color: rgba(76, 141, 255, 0.5);
+}
+
+.gla-ws-item.active {
+  border-color: rgba(52, 211, 153, 0.55);
+  background: rgba(52, 211, 153, 0.08);
+  cursor: default;
+}
+
+.gla-ws-item.active:hover {
+  border-color: rgba(52, 211, 153, 0.55);
+}
+
+.gla-ws-item.locked:not(.active) {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.gla-ws-item.locked:not(.active):hover {
+  border-color: var(--gla-border);
+}
+
+.gla-ws-item.missing {
+  cursor: not-allowed;
+  opacity: 0.55;
+  border-color: rgba(248, 113, 113, 0.35);
+}
+
+.gla-ws-item.missing:not(.active):hover {
+  border-color: rgba(248, 113, 113, 0.35);
+}
+
+.gla-ws-item.active.missing {
+  cursor: default;
+  opacity: 1;
+  border-color: rgba(251, 191, 36, 0.55);
+  background: rgba(251, 191, 36, 0.09);
+}
+
+.gla-ws-item.active.missing:hover {
+  border-color: rgba(251, 191, 36, 0.55);
+}
+
+.gla-ws-missing-tag {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--gla-red);
+  background: rgba(248, 113, 113, 0.14);
+  padding: 1px 5px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.gla-ws-item-body {
+  min-width: 0;
+  flex: 1;
+}
+
+.gla-ws-item-name {
+  font-weight: 600;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gla-ws-item-path {
+  font-family: var(--gla-mono);
+  font-size: 10.5px;
+  color: var(--gla-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gla-ws-del {
+  background: transparent;
+  border: none;
+  color: var(--gla-text-muted);
+  border-radius: 5px;
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 11px;
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+.gla-ws-del:hover {
+  opacity: 1;
+  color: var(--gla-red);
+  background: rgba(248, 113, 113, 0.15);
+}
+
+.gla-input {
+  width: 100%;
+  background: var(--gla-code-bg);
+  border: 1px solid var(--gla-border);
+  border-radius: 7px;
+  padding: 6px 9px;
+  color: var(--gla-text);
+  font-family: var(--gla-mono);
+  font-size: 12px;
+  outline: none;
+}
+
+.gla-input:focus {
+  border-color: var(--gla-accent);
+}
+
+/* Buttons */
+.gla-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  border: 1px solid var(--gla-border);
+  background: rgba(127, 127, 127, 0.09);
+  color: var(--gla-text);
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, opacity 0.15s;
+  white-space: nowrap;
+}
+
+.gla-btn:hover:not(:disabled) {
+  background: rgba(127, 127, 127, 0.17);
+}
+
+.gla-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.gla-btn-success {
+  background: rgba(52, 211, 153, 0.16);
+  border-color: rgba(52, 211, 153, 0.45);
+  color: var(--gla-green);
+}
+
+.gla-btn-success:hover:not(:disabled) {
+  background: rgba(52, 211, 153, 0.26);
+}
+
+.gla-btn-danger {
+  background: rgba(248, 113, 113, 0.15);
+  border-color: rgba(248, 113, 113, 0.45);
+  color: var(--gla-red);
+}
+
+.gla-btn-danger:hover:not(:disabled) {
+  background: rgba(248, 113, 113, 0.26);
+}
+
+.gla-btn-sm {
+  padding: 5px 8px;
+  font-size: 11.5px;
+  border-radius: 6px;
+}
+
+.gla-btn-xs {
+  padding: 2px 7px;
+  font-size: 11px;
+  border-radius: 5px;
+}
+
+/* Segmented Mode Control */
+.gla-segmented {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px;
+  background: var(--gla-code-bg);
+  padding: 3px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+}
+
+.gla-seg-btn {
+  background: transparent;
+  border: none;
+  color: var(--gla-text-muted);
+  padding: 5px 4px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.gla-seg-btn.active {
+  background: var(--gla-accent);
+  color: #fff;
+}
+
+/* Chat-bar Docked Approval & Execution Bar */
+.gla-dock-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.gla-queued-box {
+  width: 100%;
+  background: var(--gla-bg);
+  border: 1px solid var(--gla-border);
+  border-radius: 11px;
+  padding: 6px 10px;
+  box-shadow: var(--gla-shadow);
+  backdrop-filter: blur(18px);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow: hidden;
+}
+
+.gla-queued-head {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gla-text-muted);
+}
+
+.gla-queued-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 3px 7px;
+  border-radius: 6px;
+  background: var(--gla-code-bg);
+  border: 1px solid var(--gla-border);
+  font-size: 12px;
+}
+
+.gla-queued-text {
+  flex: 1;
+  min-width: 0;
+  color: var(--gla-text);
+}
+
+.gla-dock-card {
+  width: 100%;
+  background: var(--gla-bg);
+  border: 1px solid rgba(251, 191, 36, 0.55);
+  border-radius: var(--gla-radius);
+  padding: 10px 12px;
+  box-shadow: var(--gla-shadow), 0 0 0 1px rgba(251, 191, 36, 0.12);
+  backdrop-filter: blur(18px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: hidden;
+}
+
+.gla-dock-card.dangerous {
+  border-color: rgba(248, 113, 113, 0.65);
+  box-shadow: var(--gla-shadow), 0 0 0 1px rgba(248, 113, 113, 0.16);
+}
+
+.gla-dock-card.gla-dock-running {
+  flex-direction: row;
+  align-items: center;
+  padding: 8px 12px;
+  gap: 8px;
+  border-color: rgba(76, 141, 255, 0.5);
+  box-shadow: var(--gla-shadow), 0 0 0 1px rgba(76, 141, 255, 0.14);
+}
+
+.gla-dock-card.gla-dock-running .gla-tag {
+  flex-shrink: 0;
+}
+
+.gla-dock-running-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gla-accent);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.gla-spinner {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 2px solid rgba(76, 141, 255, 0.28);
+  border-top-color: var(--gla-accent);
+  animation: gla-spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes gla-spin {
+  to { transform: rotate(360deg); }
+}
+
+.gla-dock-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.gla-dock-title-group {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+}
+
+.gla-dock-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gla-amber);
+  white-space: nowrap;
+}
+
+.gla-dock-card.dangerous .gla-dock-title {
+  color: var(--gla-red);
+}
+
+.gla-dock-items {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: min(40vh, 280px);
+  overflow-y: auto;
+}
+
+.gla-dock-items::-webkit-scrollbar {
+  width: 6px;
+}
+
+.gla-dock-items::-webkit-scrollbar-thumb {
+  background: rgba(128, 138, 160, 0.28);
+  border-radius: 3px;
+}
+
+.gla-dock-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.gla-dock-hint {
+  flex: 1;
+  min-width: 0;
+  font-size: 11.5px;
+}
+
+.gla-dock-btns {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  max-width: 100%;
+}
+
+.gla-dock-actions .gla-btn {
+  height: 30px;
+  padding: 0 11px;
+  flex-shrink: 0;
+}
+
+.gla-dock-card.gla-dock-compact {
+  flex-direction: row;
+  align-items: center;
+  padding: 7px 10px;
+  gap: 8px;
+}
+
+.gla-dock-compact-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gla-amber);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.gla-dock-card.dangerous .gla-dock-compact-title {
+  color: var(--gla-red);
+}
+
+.gla-dock-compact-actions {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.gla-tool-item {
+  background: var(--gla-surface-2);
+  border: 1px solid var(--gla-border);
+  border-radius: 8px;
+  padding: 8px 9px;
+}
+
+.gla-tool-item.dangerous {
+  border-color: rgba(248, 113, 113, 0.65);
+  background: rgba(248, 113, 113, 0.1);
+}
+
+.gla-tool-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.gla-tag {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-family: var(--gla-mono);
+  text-transform: uppercase;
+}
+
+.gla-tag-read { background: rgba(76, 141, 255, 0.2); color: var(--gla-accent); }
+.gla-tag-write { background: rgba(251, 191, 36, 0.2); color: var(--gla-amber); }
+.gla-tag-cmd { background: rgba(167, 139, 250, 0.2); color: var(--gla-purple); }
+.gla-tag-danger { background: rgba(248, 113, 113, 0.24); color: var(--gla-red); }
+
+.gla-tool-summary {
+  font-family: var(--gla-mono);
+  font-size: 11.5px;
+  color: var(--gla-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gla-warning {
+  margin-top: 5px;
+  font-size: 11.5px;
+  color: var(--gla-red);
+  background: rgba(248, 113, 113, 0.13);
+  padding: 4px 7px;
+  border-radius: 5px;
+}
+
+.gla-pre {
+  margin: 6px 0 0;
+  padding: 7px;
+  background: var(--gla-code-bg);
+  border-radius: 6px;
+  font-family: var(--gla-mono);
+  font-size: 11px;
+  overflow-x: auto;
+  max-height: 170px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--gla-text);
+}
+
+.gla-diff-add { color: var(--gla-green); }
+.gla-diff-del { color: var(--gla-red); }
+.gla-diff-hdr { color: var(--gla-accent); }
+
+.gla-queued-del {
+  background: transparent;
+  border: none;
+  color: var(--gla-text-muted);
+  cursor: pointer;
+  font-size: 10px;
+  padding: 0 2px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.gla-queued-del:hover {
+  color: var(--gla-red);
+}
+
+/* Log Items */
+.gla-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.gla-log-entry {
+  background: var(--gla-code-bg);
+  border: 1px solid var(--gla-border);
+  border-radius: 7px;
+  padding: 6px 8px;
+  font-size: 11.5px;
+}
+
+.gla-log-entry summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.gla-log-entry summary::-webkit-details-marker {
+  display: none;
+}
+
+.gla-log-ok { color: var(--gla-green); }
+.gla-log-err { color: var(--gla-red); }
+
+.gla-muted {
+  color: var(--gla-text-muted);
+  font-size: 11.5px;
+}
+
+/* Setup Guide */
+.gla-guide-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.gla-step {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  background: var(--gla-code-bg);
+  border: 1px solid var(--gla-border);
+  border-radius: 8px;
+  padding: 8px 9px;
+}
+
+.gla-step-num {
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  background: var(--gla-accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.gla-step-body {
+  flex: 1;
+  min-width: 0;
+  font-size: 12px;
+}
+
+.gla-cmd-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-top: 5px;
+  padding: 5px 7px;
+  background: var(--gla-surface-2);
+  border: 1px solid var(--gla-border);
+  border-radius: 6px;
+  font-family: var(--gla-mono);
+  font-size: 11px;
+}
+
+/* Top-anchored overlay toast */
+.gla-toast {
+  position: absolute;
+  left: 50%;
+  top: 50px;
+  transform: translateX(-50%);
+  max-width: calc(100% - 28px);
+  z-index: 20;
+  pointer-events: none;
+  font-size: 11.5px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 8px;
+  background: rgba(17, 24, 39, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #f1f5f9;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.38);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gla-toast.error {
+  background: rgba(127, 29, 29, 0.96);
+  border-color: rgba(248, 113, 113, 0.55);
+  color: #fee2e2;
+  white-space: normal;
+  text-align: center;
+}
+
+.gla-toast.gla-toast-global {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: min(460px, calc(100vw - 32px));
+  z-index: 2147483010;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Roboto, sans-serif;
+}
+
+/* Inline Status Pill attached to Gemini Tool Code Blocks */
+.gla-inline-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 6px 0 4px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(22, 26, 36, 0.92);
+  border: 1px solid rgba(76, 141, 255, 0.5);
+  color: #dbeafe;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22);
+}
+
+.gla-inline-pill.pending {
+  border-color: rgba(251, 191, 36, 0.65);
+  color: #fde68a;
+}
+
+.gla-inline-pill.done {
+  border-color: rgba(52, 211, 153, 0.55);
+  color: #a7f3d0;
+}
+
+.gla-inline-pill.error {
+  border-color: rgba(248, 113, 113, 0.65);
+  color: #fecaca;
+}
